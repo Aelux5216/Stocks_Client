@@ -60,6 +60,14 @@ namespace Math_Client
 
         public class AsyncClient
         {
+            private Action<string> setText;
+
+
+            public AsyncClient(Action<string> setText)
+            {
+                this.setText = setText;
+            }
+
             // The port number for the remote device.  
             private const int port = 8080;
 
@@ -71,12 +79,14 @@ namespace Math_Client
             private static ManualResetEvent receiveDone =
                 new ManualResetEvent(false);
 
-            public struct properties
+            public static String response { get; set; }
+
+            public string getData()
             {
-                public static String response { get; set; }
+                return response;
             }
 
-            public static Socket StartClient()
+            public Socket StartClient()
             {
                 IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
                 // Create a TCP/IP socket.  
@@ -109,7 +119,7 @@ namespace Math_Client
                 }
             }
 
-            private static void ConnectCallback(IAsyncResult ar)
+            public void ConnectCallback(IAsyncResult ar)
             {
                 try
                 {
@@ -131,7 +141,7 @@ namespace Math_Client
                 }
             }
 
-            public static void Receive(Socket client)
+            public void Receive(Socket client)
             {
                 try
                 {
@@ -149,7 +159,7 @@ namespace Math_Client
                 }
             }
 
-            private static void ReceiveCallback(IAsyncResult ar)
+            public void ReceiveCallback(IAsyncResult ar)
             {
                 try
                 {
@@ -175,7 +185,7 @@ namespace Math_Client
                         // All the data has arrived; put it in response.  
                         if (state.sb.Length > 1)
                         {
-                           properties.response = state.sb.ToString();
+                           response = state.sb.ToString();
                         }
                         // Signal that all bytes have been received.  
                         receiveDone.Set();
@@ -187,7 +197,7 @@ namespace Math_Client
                 }
             }
 
-            public static void Send(Socket client, String data)
+            public void Send(Socket client, String data)
             {
                 // Convert the string data to byte data using ASCII encoding.  
                 byte[] byteData = Encoding.ASCII.GetBytes(data);
@@ -197,7 +207,7 @@ namespace Math_Client
                     new AsyncCallback(SendCallback), client);
             }
 
-            private static void SendCallback(IAsyncResult ar)
+            public void SendCallback(IAsyncResult ar)
             {
                 try
                 {
@@ -222,6 +232,8 @@ namespace Math_Client
 
         public void Message()
         {
+            var ac = new AsyncClient(setText);
+
             string command = cmbCommand.SelectedItem.ToString();
             string message = "";
             string data = "";
@@ -231,9 +243,9 @@ namespace Math_Client
                 message = txtInput.Text;
                 data = command + message;
 
-                AsyncClient.Send(client, data);
-                AsyncClient.Receive(client);
-                txtLog.Text = txtLog.Text + AsyncClient.properties.response;
+                ac.Send(client, data);
+                ac.Receive(client);
+                txtLog.Text = txtLog.Text + ac.getData();
             }
         }
 
@@ -241,7 +253,8 @@ namespace Math_Client
         {
             if (client == null)
             {
-                client = AsyncClient.StartClient();
+                var ac = new AsyncClient(setText);
+                client = ac.StartClient();
 
                 Message();
             }
