@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Math_Client.Properties
+namespace Stocks_Client.Properties
 {
 
 

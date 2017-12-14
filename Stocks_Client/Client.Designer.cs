@@ -1,4 +1,4 @@
-﻿namespace Math_Client
+﻿namespace Stocks_Client
 {
     partial class Client
     {
@@ -37,8 +37,6 @@
             this.txtBalance = new System.Windows.Forms.TextBox();
             this.btnPurchaseHistory = new System.Windows.Forms.Button();
             this.lblBalance = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgdDisplay)).BeginInit();
             this.grpAccount.SuspendLayout();
             this.SuspendLayout();
@@ -135,30 +133,11 @@
             this.lblBalance.TabIndex = 6;
             this.lblBalance.Text = "Balance:";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(37, 86);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(12, 60);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 8;
-            // 
             // Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(880, 505);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.grpAccount);
             this.Controls.Add(this.lblIntro);
             this.Controls.Add(this.btnBack);
@@ -186,8 +165,6 @@
         private System.Windows.Forms.TextBox txtBalance;
         private System.Windows.Forms.Button btnPurchaseHistory;
         private System.Windows.Forms.Label lblBalance;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox2;
     }
 }
 

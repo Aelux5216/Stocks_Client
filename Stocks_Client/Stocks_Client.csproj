@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D5132B70-CE1E-4AAF-94D4-10E0EE6CC100}</ProjectGuid>
+    <ProjectGuid>{85828E44-67AA-405A-9C01-6018B2066A18}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Math_Client</RootNamespace>
-    <AssemblyName>Math_Client</AssemblyName>
+    <RootNamespace>Stocks_Client</RootNamespace>
+    <AssemblyName>Stocks_Client</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -31,9 +31,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>Math_Client.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
