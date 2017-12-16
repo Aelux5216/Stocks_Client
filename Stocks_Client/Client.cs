@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Collections;
 
 namespace Stocks_Client
 {
@@ -19,6 +20,22 @@ namespace Stocks_Client
         {
             InitializeComponent();
             connection();
+            stockView();
+        }
+
+        //Declare companies array
+        public ArrayList CompaniesArray = new ArrayList();
+
+        public string recieved;
+
+        public string GetRecieved()
+        {
+            return recieved;
+        }
+
+        public void SetRecieved(string inputRecieved)
+        {
+            recieved = inputRecieved;
         }
 
         public class ClientInfo
@@ -29,44 +46,36 @@ namespace Stocks_Client
             public byte[] buffer = new byte[bufferSize];
         }
 
+        ClientInfo client = new ClientInfo();
+
         public static class Closer
         {
             public static bool flag = false;
         }
 
-        public ClientInfo connection()
+        public void connection()
         {
-            ClientInfo client = new ClientInfo();
-            client.socket = new TcpClient();
             if (client == null)
             {
                 try
                 {
                     client.socket.Connect("127.0.0.1", 8000);
                     client.stream = client.socket.GetStream();
-                    //dgdDisplay.
-                    return client;
+
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("Client failed to connect");
-                    return client;
                 }
             }
             else
             {
-                return client;
+                
             }
-        }
-
-        public string recieved(string data)
-        {
-            return data;
         }
 
         public void Read()
         {
-            ClientInfo client = connection();
             var buffer = new byte[1024];
             var stream = client.socket.GetStream();
             stream.BeginRead(buffer, 0, buffer.Length, EndRead, buffer);
@@ -74,17 +83,15 @@ namespace Stocks_Client
 
         public void EndRead(IAsyncResult result)
         {
-            ClientInfo client = connection();
             var buffer = (byte[])result.AsyncState;
             var stream = client.socket.GetStream();
             var endBytes = stream.EndRead(result);
             string data = Encoding.ASCII.GetString(buffer, 0, endBytes);
-            recieved(data);
+            SetRecieved(data);
         }
 
         public void Send(string data)
         {
-            ClientInfo client = connection();
             var bytes = Encoding.ASCII.GetBytes(data);
             var stream = client.socket.GetStream();
             stream.BeginWrite(bytes, 0, bytes.Length, EndSend, bytes);
@@ -93,6 +100,22 @@ namespace Stocks_Client
         public void EndSend(IAsyncResult result)
         {
             var bytes = (byte[])result.AsyncState;
+        }
+
+        public void stockView()
+        {
+            Send("RequestDB");
+
+            Read();
+
+            string data = GetRecieved();
+
+            //Split data into one row per company class
+
+            //dgdDisplay.DefaultCellStyle.ForeColor = Color.Black;
+            //dgdDisplay.Enabled = true;
+
+
         }
 
         private void btnBuy_Click(object sender, EventArgs e)
