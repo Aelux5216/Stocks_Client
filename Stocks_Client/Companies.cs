@@ -10,7 +10,7 @@ namespace Stocks_Client
     {
         //Variables 
         private string symbol, company;
-        private int price, quantity;
+        private decimal price, quantity;
 
         //Default constructor
         public Companies()
@@ -19,12 +19,25 @@ namespace Stocks_Client
         }
 
         //Main constructor
-        public Companies(string inputSymbol, string inputCompany, int inputPrice, int inputQuantity)
+        public Companies(string inputSymbol, string inputCompany, decimal inputPrice, decimal inputQuantity)
         {
             symbol = inputSymbol;
             company = inputCompany;
             price = inputPrice;
             quantity = inputQuantity;
+        }
+
+        //Display
+        public string[] Display()
+        {
+            string sSymbol = symbol;
+            string sCompany = company;
+            string sPrice = price.ToString();
+            string sQuantity = quantity.ToString();
+
+            string[] output = new string[] { sSymbol, sCompany, sPrice, sQuantity };
+
+            return output;
         }
 
         //Getters
@@ -36,11 +49,11 @@ namespace Stocks_Client
         {
             return company;
         }
-        public int GetPrice()
+        public decimal GetPrice()
         {
             return price;
         }
-        public int GetQuantity()
+        public decimal GetQuantity()
         {
             return quantity;
         }
@@ -54,11 +67,11 @@ namespace Stocks_Client
         {
             company = inputCompany;
         }
-        public void SetPrice(int inputPrice)
+        public void SetPrice(decimal inputPrice)
         {
             price = inputPrice;
         }
-        public void SetQuantity(int inputQuantity)
+        public void SetQuantity(decimal inputQuantity)
         {
             quantity = inputQuantity;
         }
