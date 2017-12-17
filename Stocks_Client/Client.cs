@@ -25,11 +25,43 @@ namespace Stocks_Client
         private void Client_Load(object sender, System.EventArgs e)
         {
             connection();
-            stockView();
-            Thread t = new Thread(() => Thread.Sleep(1));
+            dgdUpdate();
+        }
+
+        //Declare companies array
+        public ArrayList CompaniesArray = new ArrayList();
+
+        public string recieved;
+
+        public string GetRecieved()
+        {
+            return recieved;
+        }
+
+        public void SetRecieved(string inputRecieved)
+        {
+            if (recieved == "")
+            {
+                recieved = inputRecieved;
+            }
+            else
+            {
+                recieved = recieved + inputRecieved;
+            }
+        }
+
+        public void dgdUpdate()
+        {
+            recieved = "";
+
+            Send("RequestDB");
+
+            Read();
+
+            Thread t = new Thread(() => Thread.Sleep(2));
             t.Start();
             t.Join();
-            
+
             dgdDisplay.Rows.Clear();
             dgdDisplay.Refresh();
             dgdDisplay.ColumnCount = 4;
@@ -48,7 +80,7 @@ namespace Stocks_Client
             dgdDisplay.CellBorderStyle = DataGridViewCellBorderStyle.None;
 
             CompaniesArray.Clear();
-            
+
             string symbol = "";
             string company = "";
             decimal price = 0;
@@ -56,23 +88,35 @@ namespace Stocks_Client
 
             int i = 0;
 
-            string[] split = recieved.Split('$');
+            List<string> split = new List<string>(); 
+            
+            split = recieved.Split('$').ToList<string>();
+
+            try
+            {
+                split.RemoveAt(60);
+            }
+
+            catch
+            {
+
+            }
 
             foreach (var v in split)
             {
                 i++;
 
-                if(i == 1)
+                if (i == 1)
                 {
                     symbol = v;
                 }
 
-                if(i == 2)
+                if (i == 2)
                 {
                     company = v;
                 }
 
-                if(i == 3)
+                if (i == 3)
                 {
                     price = Convert.ToDecimal(v);
                 }
@@ -83,7 +127,7 @@ namespace Stocks_Client
                     Companies temp = new Companies(symbol, company, price, quantity);
                     CompaniesArray.Add(temp);
                     symbol = "";
-                    company =  "";
+                    company = "";
                     price = 0;
                     quantity = 0;
                     i = 0;
@@ -105,28 +149,6 @@ namespace Stocks_Client
             }
 
             dgdDisplay.AutoResizeColumns();
-        }
-
-        //Declare companies array
-        public ArrayList CompaniesArray = new ArrayList();
-
-        public string recieved;
-
-        public string GetRecieved()
-        {
-            return recieved;
-        }
-
-        public void SetRecieved(string inputRecieved)
-        {
-            recieved = recieved + inputRecieved;
-        }
-
-        public void stockView()
-        {
-            Send("RequestDB");
-
-            Read();
         }
 
         public class ClientInfo
@@ -214,7 +236,7 @@ namespace Stocks_Client
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-
+            dgdUpdate();
         }
 
         private void btnBuy_Click(object sender, EventArgs e)
