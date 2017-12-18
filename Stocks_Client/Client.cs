@@ -171,6 +171,7 @@ namespace Stocks_Client
                     client.stream = client.socket.GetStream();
 
                     dgdUpdate();
+                    dgdUpdate();//Temp fix for broken connection handling
 
                     MessageBox.Show("Client connected successfully");
                 }
