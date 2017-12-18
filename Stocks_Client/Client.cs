@@ -89,7 +89,11 @@ namespace Stocks_Client
 
             try
             {
-                split.RemoveAt(60);
+                split.RemoveAt(0);
+                split.RemoveAt(0);
+                split.RemoveAt(0);
+                split.RemoveAt(0);
+                split.RemoveAt(61);
             }
 
             catch
@@ -150,7 +154,7 @@ namespace Stocks_Client
         {
             public TcpClient socket = null;
             public NetworkStream stream = null;
-            public const int bufferSize = 1024;
+            public const int bufferSize = 4096;
             public byte[] buffer = new byte[bufferSize];
         }
 
@@ -170,7 +174,7 @@ namespace Stocks_Client
                     client.socket.Connect("127.0.0.1", 8000);
                     client.stream = client.socket.GetStream();
 
-                    dgdUpdate();
+                    //dgdUpdate();
                     dgdUpdate();//Temp fix for broken connection handling
 
                     MessageBox.Show("Client connected successfully");
@@ -244,7 +248,7 @@ namespace Stocks_Client
             string row = dgdDisplay.SelectedRows.ToString();
             string command = "Buy";
             string symbol = row.Substring(0, 3);
-            string data = command + symbol;
+            string data = command + "$" + symbol;
             Send(data);
 
             Read();
