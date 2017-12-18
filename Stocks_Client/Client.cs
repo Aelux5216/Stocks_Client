@@ -22,12 +22,6 @@ namespace Stocks_Client
             client.socket = new TcpClient();
         }
 
-        private void Client_Load(object sender, System.EventArgs e)
-        {
-            connection();
-            dgdUpdate();
-        }
-
         //Declare companies array
         public ArrayList CompaniesArray = new ArrayList();
 
@@ -64,14 +58,15 @@ namespace Stocks_Client
 
             dgdDisplay.Rows.Clear();
             dgdDisplay.Refresh();
-            dgdDisplay.ColumnCount = 4;
+            dgdDisplay.ColumnCount = 5;
             dgdDisplay.RowCount = 15;
             dgdDisplay.CurrentCell = null;
             dgdDisplay.Columns[0].HeaderCell.Value = "SYMBOL";
             dgdDisplay.Columns[1].HeaderCell.Value = "COMPANY";
             dgdDisplay.Columns[2].HeaderCell.Value = "PRICE";
             dgdDisplay.Columns[3].HeaderCell.Value = "QUANTITY";
-
+            dgdDisplay.Columns[4].HeaderCell.Value = "STOCKS_OWNED"; //Think how to do this better as client id will be needed and will need to be stored on server 
+                                                                     //And intergrated with purchase history
             foreach (DataGridViewColumn d in dgdDisplay.Columns)
             {
                 d.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -174,6 +169,10 @@ namespace Stocks_Client
                 {
                     client.socket.Connect("127.0.0.1", 8000);
                     client.stream = client.socket.GetStream();
+
+                    dgdUpdate();
+
+                    MessageBox.Show("Client connected successfully");
                 }
                 catch (Exception)
                 {
@@ -192,16 +191,16 @@ namespace Stocks_Client
             }
             else
             {
-                MessageBox.Show("Client connected successfully");
+                
             }
         }
 
         public void Read()
         {
-            var buffer = new byte[1024];
-            var stream = client.socket.GetStream();
-
-            stream.BeginRead(buffer, 0, buffer.Length, EndRead, buffer);
+            while (client.stream.DataAvailable)
+            {
+                client.stream.BeginRead(client.buffer, 0, client.buffer.Length, EndRead, client.buffer);
+            }
         }
 
         public void EndRead(IAsyncResult result)
@@ -209,16 +208,9 @@ namespace Stocks_Client
             var stream = client.socket.GetStream();
             int endBytes = stream.EndRead(result);
 
-            if (endBytes == 0)
-            {
-                return;
-            }
-
             var buffer = (byte[])result.AsyncState;
             string data = Encoding.ASCII.GetString(buffer, 0, endBytes);
             SetRecieved(data);
- 
-            stream.BeginRead(buffer, 0, buffer.Length, EndRead, buffer);
         }
 
         public void Send(string data)
@@ -236,12 +228,38 @@ namespace Stocks_Client
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            dgdUpdate();
+            if (client.socket.Connected)
+            {
+                dgdUpdate();
+            }
+            else
+            {
+                connection();
+            }
         }
 
         private void btnBuy_Click(object sender, EventArgs e)
         {
-            
+            string row = dgdDisplay.SelectedRows.ToString();
+            string command = "Buy";
+            string symbol = row.Substring(0, 3);
+            string data = command + symbol;
+            Send(data);
+
+            Read();
+
+            if(recieved == "Success")
+            {
+                //Add 1 in correct cell
+                //Update purchase history
+                //Update view
+                MessageBox.Show("Stock purchased successfully");
+            }
+
+            else if (recieved == "Fail")
+            {
+                MessageBox.Show("Stock purchase failed please try again");
+            }
         }
 
         private void btnSell_Click(object sender, EventArgs e)
