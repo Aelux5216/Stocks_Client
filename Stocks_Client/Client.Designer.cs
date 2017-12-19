@@ -74,21 +74,21 @@
             this.dgdDisplay.AllowUserToResizeRows = false;
             this.dgdDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgdDisplay.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgdDisplay.Location = new System.Drawing.Point(60, 101);
+            this.dgdDisplay.Location = new System.Drawing.Point(8, 101);
             this.dgdDisplay.MultiSelect = false;
             this.dgdDisplay.Name = "dgdDisplay";
             this.dgdDisplay.ReadOnly = true;
             this.dgdDisplay.RowHeadersVisible = false;
             this.dgdDisplay.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgdDisplay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgdDisplay.Size = new System.Drawing.Size(549, 353);
+            this.dgdDisplay.Size = new System.Drawing.Size(482, 353);
             this.dgdDisplay.TabIndex = 3;
             // 
             // lblIntro
             // 
             this.lblIntro.AutoSize = true;
             this.lblIntro.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lblIntro.Location = new System.Drawing.Point(115, 41);
+            this.lblIntro.Location = new System.Drawing.Point(12, 41);
             this.lblIntro.Name = "lblIntro";
             this.lblIntro.Size = new System.Drawing.Size(478, 40);
             this.lblIntro.TabIndex = 4;
@@ -101,7 +101,7 @@
             this.grpAccount.Controls.Add(this.btnPurchaseHistory);
             this.grpAccount.Controls.Add(this.lblBalance);
             this.grpAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F);
-            this.grpAccount.Location = new System.Drawing.Point(633, 12);
+            this.grpAccount.Location = new System.Drawing.Point(509, 12);
             this.grpAccount.Name = "grpAccount";
             this.grpAccount.Size = new System.Drawing.Size(152, 97);
             this.grpAccount.TabIndex = 5;
@@ -156,7 +156,7 @@
             this.grpControlPanel.Controls.Add(this.btnBuy);
             this.grpControlPanel.Controls.Add(this.btnSell);
             this.grpControlPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F);
-            this.grpControlPanel.Location = new System.Drawing.Point(633, 115);
+            this.grpControlPanel.Location = new System.Drawing.Point(509, 115);
             this.grpControlPanel.Name = "grpControlPanel";
             this.grpControlPanel.Size = new System.Drawing.Size(152, 339);
             this.grpControlPanel.TabIndex = 8;
@@ -179,14 +179,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.AutoScrollMinSize = new System.Drawing.Size(1134, 0);
-            this.ClientSize = new System.Drawing.Size(810, 513);
+            this.ClientSize = new System.Drawing.Size(674, 493);
             this.Controls.Add(this.grpAccount);
             this.Controls.Add(this.lblIntro);
             this.Controls.Add(this.dgdDisplay);
             this.Controls.Add(this.grpControlPanel);
             this.Name = "Client";
             this.Text = "Client Stocks";
+            this.Shown += new System.EventHandler(this.OnLoad);
             ((System.ComponentModel.ISupportInitialize)(this.dgdDisplay)).EndInit();
             this.grpAccount.ResumeLayout(false);
             this.grpAccount.PerformLayout();

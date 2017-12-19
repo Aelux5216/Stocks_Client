@@ -19,7 +19,12 @@ namespace Stocks_Client
         public Client()
         {
             InitializeComponent();
+        }
+
+        public void OnLoad(object sender, EventArgs e)
+        {
             client.socket = new TcpClient();
+            connection();
         }
 
         //Declare companies array
@@ -34,25 +39,16 @@ namespace Stocks_Client
 
         public void SetRecieved(string inputRecieved)
         {
-            if (recieved == "")
-            {
-                recieved = inputRecieved;
-            }
-            else
-            {
-                recieved = recieved + inputRecieved;
-            }
+           recieved = inputRecieved;
         }
 
         public void dgdUpdate()
         {
-            recieved = "";
-
             Send("RequestDB");
 
             Read();
 
-            Thread t = new Thread(() => Thread.Sleep(2));
+            Thread t = new Thread(() => Thread.Sleep(100));
             t.Start();
             t.Join();
 
@@ -60,7 +56,6 @@ namespace Stocks_Client
             dgdDisplay.Refresh();
             dgdDisplay.ColumnCount = 5;
             dgdDisplay.RowCount = 15;
-            dgdDisplay.CurrentCell = null;
             dgdDisplay.Columns[0].HeaderCell.Value = "SYMBOL";
             dgdDisplay.Columns[1].HeaderCell.Value = "COMPANY";
             dgdDisplay.Columns[2].HeaderCell.Value = "PRICE";
@@ -93,7 +88,7 @@ namespace Stocks_Client
                 split.RemoveAt(0);
                 split.RemoveAt(0);
                 split.RemoveAt(0);
-                split.RemoveAt(61);
+                split.RemoveAt(60);
             }
 
             catch
@@ -174,13 +169,13 @@ namespace Stocks_Client
                     client.socket.Connect("127.0.0.1", 8000);
                     client.stream = client.socket.GetStream();
 
-                    //dgdUpdate();
-                    dgdUpdate();//Temp fix for broken connection handling
+                    dgdUpdate();
 
                     MessageBox.Show("Client connected successfully");
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    MessageBox.Show(e.ToString());
                     DialogResult dialogresult = MessageBox.Show("Client failed to connect" + Environment.NewLine + 
                         "if you press cancel please use reconnect button to reconnect","Failed to connect",MessageBoxButtons.RetryCancel);
 
@@ -202,10 +197,8 @@ namespace Stocks_Client
 
         public void Read()
         {
-            while (client.stream.DataAvailable)
-            {
-                client.stream.BeginRead(client.buffer, 0, client.buffer.Length, EndRead, client.buffer);
-            }
+            var stream = client.socket.GetStream();
+            client.stream.BeginRead(client.buffer, 0, client.buffer.Length, EndRead, client.buffer);
         }
 
         public void EndRead(IAsyncResult result)
@@ -214,13 +207,13 @@ namespace Stocks_Client
             int endBytes = stream.EndRead(result);
 
             var buffer = (byte[])result.AsyncState;
-            string data = Encoding.ASCII.GetString(buffer, 0, endBytes);
+            string data = Encoding.UTF8.GetString(buffer, 0, endBytes);
             SetRecieved(data);
         }
 
         public void Send(string data)
         {
-            var bytes = Encoding.ASCII.GetBytes(data);
+            var bytes = Encoding.UTF8.GetBytes(data);
             var stream = client.socket.GetStream();
             stream.BeginWrite(bytes, 0, bytes.Length, EndSend, bytes);
         }
@@ -245,20 +238,25 @@ namespace Stocks_Client
 
         private void btnBuy_Click(object sender, EventArgs e)
         {
-            string row = dgdDisplay.SelectedRows.ToString();
+            var row = dgdDisplay.CurrentRow.Cells[0].Value.ToString();
             string command = "Buy";
-            string symbol = row.Substring(0, 3);
-            string data = command + "$" + symbol;
-            Send(data);
+            string symbol = row.ToString();
+            string data2 = command + "$" + symbol;
+            Send(data2);
 
             Read();
 
-            if(recieved == "Success")
+            Thread t = new Thread(() => Thread.Sleep(100));
+            t.Start();
+            t.Join();
+
+            if (recieved == "Success")
             {
                 //Add 1 in correct cell
                 //Update purchase history
                 //Update view
                 MessageBox.Show("Stock purchased successfully");
+                dgdUpdate();
             }
 
             else if (recieved == "Fail")
@@ -269,7 +267,31 @@ namespace Stocks_Client
 
         private void btnSell_Click(object sender, EventArgs e)
         {
+            var row = dgdDisplay.CurrentRow.Cells[0].Value.ToString();
+            string command = "Sell";
+            string symbol = row.ToString();
+            string data2 = command + "$" + symbol;
+            Send(data2);
 
+            Read();
+
+            Thread t = new Thread(() => Thread.Sleep(100));
+            t.Start();
+            t.Join();
+
+            if (recieved == "Success")
+            {
+                //Add 1 in correct cell
+                //Update purchase history
+                //Update view
+                MessageBox.Show("Stock sold successfully");
+                dgdUpdate();
+            }
+
+            else if (recieved == "Fail")
+            {
+                MessageBox.Show("Stock purchase failed please try again");
+            }
         }
 
         private void btnPurchaseHistory_Click(object sender, EventArgs e)
