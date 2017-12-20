@@ -48,7 +48,7 @@ namespace Stocks_Client
 
             Read();
 
-            Thread t = new Thread(() => Thread.Sleep(100));
+            Thread t = new Thread(() => Thread.Sleep(200));
             t.Start();
             t.Join();
 
@@ -246,7 +246,7 @@ namespace Stocks_Client
 
             Read();
 
-            Thread t = new Thread(() => Thread.Sleep(100));
+            Thread t = new Thread(() => Thread.Sleep(300));
             t.Start();
             t.Join();
 
@@ -275,7 +275,7 @@ namespace Stocks_Client
 
             Read();
 
-            Thread t = new Thread(() => Thread.Sleep(100));
+            Thread t = new Thread(() => Thread.Sleep(300));
             t.Start();
             t.Join();
 
