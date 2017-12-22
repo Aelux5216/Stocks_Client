@@ -88,12 +88,13 @@
             // 
             this.lblIntro.AutoSize = true;
             this.lblIntro.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lblIntro.Location = new System.Drawing.Point(12, 41);
+            this.lblIntro.Location = new System.Drawing.Point(36, 41);
             this.lblIntro.Name = "lblIntro";
-            this.lblIntro.Size = new System.Drawing.Size(478, 40);
+            this.lblIntro.Size = new System.Drawing.Size(427, 40);
             this.lblIntro.TabIndex = 4;
-            this.lblIntro.Text = "   Welcome to my client for Buying/Selling/Viewing stocks.\r\nPlease select a stock" +
-    " for more information or to interact with it.";
+            this.lblIntro.Text = "Welcome to my client for Buying/Selling/Viewing stocks.\r\nPlease select a stock to" +
+    " interact with it.";
+            this.lblIntro.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // grpAccount
             // 
@@ -112,10 +113,12 @@
             // 
             this.txtBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtBalance.Location = new System.Drawing.Point(67, 23);
+            this.txtBalance.MaxLength = 10;
             this.txtBalance.Name = "txtBalance";
+            this.txtBalance.ReadOnly = true;
             this.txtBalance.Size = new System.Drawing.Size(79, 26);
             this.txtBalance.TabIndex = 6;
-            this.txtBalance.Text = "£20,000";
+            this.txtBalance.Text = "20,000.00";
             // 
             // btnPurchaseHistory
             // 
