@@ -49,7 +49,7 @@
             this.btnBuy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
             this.btnBuy.Location = new System.Drawing.Point(12, 133);
             this.btnBuy.Name = "btnBuy";
-            this.btnBuy.Size = new System.Drawing.Size(134, 23);
+            this.btnBuy.Size = new System.Drawing.Size(143, 23);
             this.btnBuy.TabIndex = 0;
             this.btnBuy.Text = "Buy";
             this.btnBuy.UseVisualStyleBackColor = true;
@@ -60,7 +60,7 @@
             this.btnSell.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
             this.btnSell.Location = new System.Drawing.Point(12, 162);
             this.btnSell.Name = "btnSell";
-            this.btnSell.Size = new System.Drawing.Size(134, 23);
+            this.btnSell.Size = new System.Drawing.Size(143, 23);
             this.btnSell.TabIndex = 1;
             this.btnSell.Text = "Sell";
             this.btnSell.UseVisualStyleBackColor = true;
@@ -81,7 +81,7 @@
             this.dgdDisplay.RowHeadersVisible = false;
             this.dgdDisplay.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgdDisplay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgdDisplay.Size = new System.Drawing.Size(482, 353);
+            this.dgdDisplay.Size = new System.Drawing.Size(494, 353);
             this.dgdDisplay.TabIndex = 3;
             // 
             // lblIntro
@@ -102,9 +102,9 @@
             this.grpAccount.Controls.Add(this.btnPurchaseHistory);
             this.grpAccount.Controls.Add(this.lblBalance);
             this.grpAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F);
-            this.grpAccount.Location = new System.Drawing.Point(509, 12);
+            this.grpAccount.Location = new System.Drawing.Point(508, 12);
             this.grpAccount.Name = "grpAccount";
-            this.grpAccount.Size = new System.Drawing.Size(152, 97);
+            this.grpAccount.Size = new System.Drawing.Size(163, 97);
             this.grpAccount.TabIndex = 5;
             this.grpAccount.TabStop = false;
             this.grpAccount.Text = "Account:";
@@ -116,7 +116,7 @@
             this.txtBalance.MaxLength = 10;
             this.txtBalance.Name = "txtBalance";
             this.txtBalance.ReadOnly = true;
-            this.txtBalance.Size = new System.Drawing.Size(79, 26);
+            this.txtBalance.Size = new System.Drawing.Size(88, 26);
             this.txtBalance.TabIndex = 6;
             this.txtBalance.Text = "20,000.00";
             // 
@@ -125,7 +125,7 @@
             this.btnPurchaseHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
             this.btnPurchaseHistory.Location = new System.Drawing.Point(6, 55);
             this.btnPurchaseHistory.Name = "btnPurchaseHistory";
-            this.btnPurchaseHistory.Size = new System.Drawing.Size(140, 31);
+            this.btnPurchaseHistory.Size = new System.Drawing.Size(149, 31);
             this.btnPurchaseHistory.TabIndex = 7;
             this.btnPurchaseHistory.Text = "Purchase History";
             this.btnPurchaseHistory.UseVisualStyleBackColor = true;
@@ -146,7 +146,7 @@
             this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
             this.btnRefresh.Location = new System.Drawing.Point(12, 63);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(134, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(143, 23);
             this.btnRefresh.TabIndex = 6;
             this.btnRefresh.Text = "Refresh stocks";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -159,9 +159,9 @@
             this.grpControlPanel.Controls.Add(this.btnBuy);
             this.grpControlPanel.Controls.Add(this.btnSell);
             this.grpControlPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F);
-            this.grpControlPanel.Location = new System.Drawing.Point(509, 115);
+            this.grpControlPanel.Location = new System.Drawing.Point(508, 115);
             this.grpControlPanel.Name = "grpControlPanel";
-            this.grpControlPanel.Size = new System.Drawing.Size(152, 339);
+            this.grpControlPanel.Size = new System.Drawing.Size(163, 339);
             this.grpControlPanel.TabIndex = 8;
             this.grpControlPanel.TabStop = false;
             this.grpControlPanel.Text = "Control Panel";
@@ -171,7 +171,7 @@
             this.btnReconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
             this.btnReconnect.Location = new System.Drawing.Point(12, 234);
             this.btnReconnect.Name = "btnReconnect";
-            this.btnReconnect.Size = new System.Drawing.Size(134, 55);
+            this.btnReconnect.Size = new System.Drawing.Size(143, 55);
             this.btnReconnect.TabIndex = 7;
             this.btnReconnect.Text = "Connect/Reconnect \r\nto server";
             this.btnReconnect.UseVisualStyleBackColor = true;

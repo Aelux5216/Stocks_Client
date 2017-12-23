@@ -53,7 +53,7 @@ namespace Stocks_Client
             Thread t = new Thread(() => Thread.Sleep(250));
             t.Start();
             t.Join();
-
+            
             dgdDisplay.Rows.Clear();
             dgdDisplay.Refresh();
             dgdDisplay.ColumnCount = 5;
@@ -82,7 +82,7 @@ namespace Stocks_Client
 
             List<string> split = new List<string>(); 
             
-            split = recieved.Split('$').ToList<string>();
+            split = GetRecieved().Split('$').ToList<string>();
 
             try
             {
@@ -154,7 +154,7 @@ namespace Stocks_Client
             Thread t2 = new Thread(() => Thread.Sleep(250));
             t2.Start();
             t2.Join();
-
+            
             string[] splitOwnedStocks = GetRecieved().Split('$');
 
             int l = -1;
@@ -169,10 +169,10 @@ namespace Stocks_Client
 
             Read();
 
-            Thread t3 = new Thread(() => Thread.Sleep(1000));
+            Thread t3 = new Thread(() => Thread.Sleep(600));
             t3.Start();
             t3.Join();
-
+            
             purchaseHistory = GetRecieved();
 
             Send("GetBalance" + "$" + userDetails[0] + "$" + txtBalance.Text.TrimStart('£'));
@@ -182,11 +182,11 @@ namespace Stocks_Client
             Thread t4 = new Thread(() => Thread.Sleep(250));
             t4.Start();
             t4.Join();
-
+            
             decimal splitBalance = Convert.ToDecimal(GetRecieved());
 
-            string splitBalanceString = splitBalance.ToString(); //Maybe add thing to insert , substring from last index - 3 remember to resize box as well. 
-            int index = splitBalanceString.Length - 3;
+            string splitBalanceString = splitBalance.ToString("#####.00"); //Maybe add thing to insert , substring from last index - 3 remember to resize box as well. 
+            int index = splitBalanceString.Length - 6;
             txtBalance.Text = "£" + splitBalanceString.Insert(index, ",");
 
             //recieve clientinfo from server
@@ -205,42 +205,36 @@ namespace Stocks_Client
 
         public void connect()
         {
-            if (client.socket.Connected == false)
+            try
             {
-                try
-                {
-                    Login tempLogin = new Login();
-                    string[] userDetails = Login.loginInfo.Split('$');
+                Login tempLogin = new Login();
+                string[] userDetails = Login.loginInfo.Split('$');
 
-                    client.socket.Connect(userDetails[1], 8000);
-                    client.stream = client.socket.GetStream();
+                client.socket.Connect(userDetails[1], 8000);
+                client.stream = client.socket.GetStream();
 
-                    dgdUpdate();
+                dgdUpdate();
 
-                    MessageBox.Show("Client connected successfully");
-                }
-                catch (Exception)
-                {
-                    DialogResult dialogresult = MessageBox.Show("Client failed to connect" + Environment.NewLine + 
-                        "if you press cancel please use reconnect button to reconnect","Failed to connect",MessageBoxButtons.RetryCancel);
-
-                    if(dialogresult == DialogResult.Retry)
-                    {
-                        connect();
-                    }
-                    else if(dialogresult == DialogResult.Cancel)
-                    {
-
-                    }
-                }
+                MessageBox.Show("Client connected successfully");
             }
-            else
+
+            catch (Exception)
             {
-               
+                DialogResult dialogresult = MessageBox.Show("Client failed to connect" + Environment.NewLine +
+                    "if you press cancel please use reconnect button to reconnect", "Failed to connect", MessageBoxButtons.RetryCancel);
+
+                if (dialogresult == DialogResult.Retry)
+                {
+                    reconnect();
+                }
+                else if (dialogresult == DialogResult.Cancel)
+                {
+
+                }
             }
         }
 
-        public void reconnect()
+        public void stillConnected()
         {
             if (client.socket.Connected == false)
             {
@@ -256,15 +250,14 @@ namespace Stocks_Client
 
                     MessageBox.Show("Client was disconnected, you have been re-connected successfully");
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show(e.ToString());
                     DialogResult dialogresult = MessageBox.Show("Client was disconnected and failed to reconnect" + Environment.NewLine +
                         "please try again.", "Failed to connect", MessageBoxButtons.RetryCancel);
 
                     if (dialogresult == DialogResult.Retry)
                     {
-                        reconnect();
+                        stillConnected();
                     }
                     else if (dialogresult == DialogResult.Cancel)
                     {
@@ -278,6 +271,55 @@ namespace Stocks_Client
             }
         }
 
+
+        public void reconnect()
+        {
+            if (client.socket != null)
+            {
+                try
+                {
+                    Login tempLogin = new Login();
+                    string[] userDetails = Login.loginInfo.Split('$');
+
+                    client.socket = new TcpClient();
+
+                    client.socket.Connect(userDetails[1], 8000);
+                    client.stream = client.socket.GetStream();
+
+                    dgdUpdate();
+
+                    MessageBox.Show("You have been re-connected successfully");
+                }
+                catch
+                {
+                    DialogResult dialogresult = MessageBox.Show("Client failed to reconnect" + Environment.NewLine +
+                        "please try again.", "Failed to connect", MessageBoxButtons.RetryCancel);
+
+                    if (dialogresult == DialogResult.Retry)
+                    {
+                        reconnect();
+                    }
+                    else if (dialogresult == DialogResult.Cancel)
+                    {
+
+                    }
+                }
+            }
+
+            else
+            {
+                Login tempLogin = new Login();
+                string[] userDetails = Login.loginInfo.Split('$');
+
+                client.socket.Connect(userDetails[1], 8000);
+                client.stream = client.socket.GetStream();
+
+                dgdUpdate();
+
+                MessageBox.Show("You have been connected successfully");
+            }
+        }
+
         public void Read()
         {
             var stream = client.socket.GetStream();
@@ -286,20 +328,12 @@ namespace Stocks_Client
 
         public void EndRead(IAsyncResult result)
         {
-            try
-            {
-                var stream = client.socket.GetStream();
-                int endBytes = stream.EndRead(result);
+           var stream = client.socket.GetStream();
+           int endBytes = stream.EndRead(result);
 
-                var buffer = (byte[])result.AsyncState;
-                string data = Encoding.UTF8.GetString(buffer, 0, endBytes);
-                SetRecieved(data);
-            }
-
-            catch
-            {
-                MessageBox.Show("Client disconnect please press reconnect button");
-            }
+           var buffer = (byte[])result.AsyncState;
+           string data = Encoding.UTF8.GetString(buffer, 0, endBytes);
+           SetRecieved(data);
         }
 
         public void Send(string data)
@@ -323,40 +357,46 @@ namespace Stocks_Client
             }
             else
             {
-                connect();
+                stillConnected();
             }
         }
 
         private void btnBuy_Click(object sender, EventArgs e)
         {
-            var row = dgdDisplay.CurrentRow.Cells[0].Value.ToString();
-            string command = "BuyStock";
-            string symbol = row.ToString();
-            string data2 = command + "$" + symbol;
+            Login tempLogin = new Login();
+            string[] userDetails = Login.loginInfo.Split('$');
 
-            reconnect();
+            string command = "BuyStock";
+            string symbol = dgdDisplay.CurrentRow.Cells[0].Value.ToString();
+            string username = userDetails[0];
+
+            string data2 = command + "$" + symbol + "$" + username;
+
+            stillConnected();
             Send(data2);
 
             Read();
-
-            Thread t = new Thread(() => Thread.Sleep(250));
+            
+            Thread t = new Thread(() => Thread.Sleep(600));
             t.Start();
             t.Join();
-
+            
             if (recieved == "Success")
             {
-                //Add 1 in correct cell
-                //Update purchase history
-                //Update view
                 MessageBox.Show("Stock purchased successfully");
-                reconnect();
+                dgdUpdate();
             }
 
-            else if (recieved == "Fail")
+            else if (recieved == "NoFunds")
             {
-                MessageBox.Show("Stock purchase failed please try again");
-                reconnect();
+                MessageBox.Show("You do not have enough money to buy this stock.");
             }
+
+            else if (recieved == "NoCompanyStocksOwned")
+            {
+                MessageBox.Show("You do not own any stocks to sell with this company");
+            }
+
             else
             {
                 
@@ -365,33 +405,33 @@ namespace Stocks_Client
 
         private void btnSell_Click(object sender, EventArgs e)
         {
-            var row = dgdDisplay.CurrentRow.Cells[0].Value.ToString();
-            string command = "SellStock";
-            string symbol = row.ToString();
-            string data2 = command + "$" + symbol;
+            Login tempLogin = new Login();
+            string[] userDetails = Login.loginInfo.Split('$');
 
-            reconnect();
+            string command = "SellStock";
+            string symbol = dgdDisplay.CurrentRow.Cells[0].Value.ToString();
+            string username = userDetails[0];
+
+            string data2 = command + "$" + symbol + "$" + username;
+
+            stillConnected();
             Send(data2);
 
             Read();
-
-            Thread t = new Thread(() => Thread.Sleep(250));
+            
+            Thread t = new Thread(() => Thread.Sleep(600));
             t.Start();
             t.Join();
 
             if (recieved == "Success")
             {
-                //Add 1 in correct cell
-                //Update purchase history
-                //Update view
                 MessageBox.Show("Stock sold successfully");
-                reconnect();
+                dgdUpdate();
             }
 
-            else if (recieved == "Fail")
+            else if (recieved == "NoOwnedStocks")
             {
-                MessageBox.Show("Stock purchase failed please try again");
-                reconnect();
+                MessageBox.Show("You do not own any stocks to sell with this company");
             }
 
             else
