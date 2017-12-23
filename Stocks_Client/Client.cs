@@ -155,7 +155,7 @@ namespace Stocks_Client
             t2.Start();
             t2.Join();
 
-            string[] splitOwnedStocks = recieved.Split('$');
+            string[] splitOwnedStocks = GetRecieved().Split('$');
 
             int l = -1;
 
@@ -169,11 +169,11 @@ namespace Stocks_Client
 
             Read();
 
-            Thread t3 = new Thread(() => Thread.Sleep(250));
+            Thread t3 = new Thread(() => Thread.Sleep(1000));
             t3.Start();
             t3.Join();
 
-            purchaseHistory = recieved;
+            purchaseHistory = GetRecieved();
 
             Send("GetBalance" + "$" + userDetails[0] + "$" + txtBalance.Text.TrimStart('£'));
 
@@ -183,9 +183,11 @@ namespace Stocks_Client
             t4.Start();
             t4.Join();
 
-            decimal splitBalance = Convert.ToDecimal(recieved);
+            decimal splitBalance = Convert.ToDecimal(GetRecieved());
 
-            txtBalance.Text = "£" + splitBalance.ToString(); //Maybe add thing to insert , substring from last index - 3 remember to resize box as well. 
+            string splitBalanceString = splitBalance.ToString(); //Maybe add thing to insert , substring from last index - 3 remember to resize box as well. 
+            int index = splitBalanceString.Length - 3;
+            txtBalance.Text = "£" + splitBalanceString.Insert(index, ",");
 
             //recieve clientinfo from server
             dgdDisplay.AutoResizeColumns();
@@ -217,9 +219,8 @@ namespace Stocks_Client
 
                     MessageBox.Show("Client connected successfully");
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show(e.ToString());
                     DialogResult dialogresult = MessageBox.Show("Client failed to connect" + Environment.NewLine + 
                         "if you press cancel please use reconnect button to reconnect","Failed to connect",MessageBoxButtons.RetryCancel);
 
@@ -285,12 +286,20 @@ namespace Stocks_Client
 
         public void EndRead(IAsyncResult result)
         {
-            var stream = client.socket.GetStream();
-            int endBytes = stream.EndRead(result);
+            try
+            {
+                var stream = client.socket.GetStream();
+                int endBytes = stream.EndRead(result);
 
-            var buffer = (byte[])result.AsyncState;
-            string data = Encoding.UTF8.GetString(buffer, 0, endBytes);
-            SetRecieved(data);
+                var buffer = (byte[])result.AsyncState;
+                string data = Encoding.UTF8.GetString(buffer, 0, endBytes);
+                SetRecieved(data);
+            }
+
+            catch
+            {
+                MessageBox.Show("Client disconnect please press reconnect button");
+            }
         }
 
         public void Send(string data)
@@ -346,6 +355,7 @@ namespace Stocks_Client
             else if (recieved == "Fail")
             {
                 MessageBox.Show("Stock purchase failed please try again");
+                reconnect();
             }
             else
             {
@@ -375,12 +385,13 @@ namespace Stocks_Client
                 //Update purchase history
                 //Update view
                 MessageBox.Show("Stock sold successfully");
-                dgdUpdate();
+                reconnect();
             }
 
             else if (recieved == "Fail")
             {
                 MessageBox.Show("Stock purchase failed please try again");
+                reconnect();
             }
 
             else
