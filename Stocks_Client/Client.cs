@@ -80,9 +80,7 @@ namespace Stocks_Client
 
             int i = 0;
 
-            List<string> split = new List<string>(); 
-            
-            split = GetRecieved().Split('$').ToList<string>();
+            List<string> split = GetRecieved().Split('$').ToList<string>();
 
             try
             {
@@ -151,25 +149,28 @@ namespace Stocks_Client
 
             Read();
 
-            Thread t2 = new Thread(() => Thread.Sleep(250));
+            Thread t2 = new Thread(() => Thread.Sleep(2000));
             t2.Start();
             t2.Join();
-            
-            string[] splitOwnedStocks = GetRecieved().Split('$');
+
+            List<string> splitOwnedStocks = GetRecieved().Split('$').ToList<string>();
+
+            splitOwnedStocks.RemoveAt(0);
+            splitOwnedStocks.RemoveAt(15);
 
             int l = -1;
 
             foreach (string item in splitOwnedStocks)
             {
                 l++;
-                dgdDisplay.Rows[i].Cells[4].Value = item; //Add into dgd Properly
+                dgdDisplay.Rows[l].Cells[4].Value = item; //Add into dgd Properly
             }
 
             Send("GetPurchaseHistory" + "$" + userDetails[0]);
 
             Read();
 
-            Thread t3 = new Thread(() => Thread.Sleep(600));
+            Thread t3 = new Thread(() => Thread.Sleep(1400));
             t3.Start();
             t3.Join();
             
@@ -185,9 +186,8 @@ namespace Stocks_Client
             
             decimal splitBalance = Convert.ToDecimal(GetRecieved());
 
-            string splitBalanceString = splitBalance.ToString("#####.00"); //Maybe add thing to insert , substring from last index - 3 remember to resize box as well. 
-            int index = splitBalanceString.Length - 6;
-            txtBalance.Text = "£" + splitBalanceString.Insert(index, ",");
+            string splitBalanceString = splitBalance.ToString("#####.00"); 
+            txtBalance.Text = "£" + splitBalanceString;
 
             //recieve clientinfo from server
             dgdDisplay.AutoResizeColumns();
@@ -197,11 +197,13 @@ namespace Stocks_Client
         {
             public TcpClient socket = null;
             public NetworkStream stream = null;
-            public const int bufferSize = 4096;
+            public const int bufferSize = 8192;
             public byte[] buffer = new byte[bufferSize];
         }
 
         ClientInfo client = new ClientInfo();
+
+        public static Client savedClient { get; set; }
 
         public void connect()
         {
@@ -246,8 +248,6 @@ namespace Stocks_Client
                     client.socket.Connect(userDetails[1], 8000);
                     client.stream = client.socket.GetStream();
 
-                    dgdUpdate();
-
                     MessageBox.Show("Client was disconnected, you have been re-connected successfully");
                 }
                 catch (Exception)
@@ -267,7 +267,7 @@ namespace Stocks_Client
             }
             else
             {
-                dgdUpdate();
+                
             }
         }
 
@@ -285,8 +285,6 @@ namespace Stocks_Client
 
                     client.socket.Connect(userDetails[1], 8000);
                     client.stream = client.socket.GetStream();
-
-                    dgdUpdate();
 
                     MessageBox.Show("You have been re-connected successfully");
                 }
@@ -313,8 +311,6 @@ namespace Stocks_Client
 
                 client.socket.Connect(userDetails[1], 8000);
                 client.stream = client.socket.GetStream();
-
-                dgdUpdate();
 
                 MessageBox.Show("You have been connected successfully");
             }
@@ -377,7 +373,7 @@ namespace Stocks_Client
 
             Read();
             
-            Thread t = new Thread(() => Thread.Sleep(600));
+            Thread t = new Thread(() => Thread.Sleep(700));
             t.Start();
             t.Join();
             
@@ -419,7 +415,7 @@ namespace Stocks_Client
 
             Read();
             
-            Thread t = new Thread(() => Thread.Sleep(600));
+            Thread t = new Thread(() => Thread.Sleep(700));
             t.Start();
             t.Join();
 
@@ -442,17 +438,19 @@ namespace Stocks_Client
 
         private void btnPurchaseHistory_Click(object sender, EventArgs e)
         {
-            string[] userHistoryCheck = purchaseHistory.Split('$');
-
-            if(userHistoryCheck[0] == "")
+            if (purchaseHistory == "None")
             {
                 MessageBox.Show("Please make sure you have purchased/sold a stock before trying to view your history.");
             }
 
-            this.Hide();
-            var PurchaseHistory = new PurchaseHistory();
-            PurchaseHistory.Closed += (f, args) => this.Close();
-            PurchaseHistory.Show();
+            else
+            {
+                savedClient = this;
+                this.Hide();
+                var PurchaseHistory = new PurchaseHistory();
+                PurchaseHistory.Closed += (f, args) => this.Close();
+                PurchaseHistory.Show();
+            }
         }
         
         private void btnReconnect_Click(object sender, EventArgs e)

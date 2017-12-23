@@ -29,6 +29,16 @@ namespace Stocks_Client
                 MessageBox.Show("Username cannot contain spaces or the '$' symbol." + Environment.NewLine + "Please try again.");
             }
 
+            else if (username == "" || username == " ")
+            {
+                MessageBox.Show("Username cannot be blank.");
+            }
+
+            else if (txtIpAddress.Text == "" || txtIpAddress.Text == " ")
+            {
+                MessageBox.Show("Ip address cannot be blank.");
+            }
+
             else
             {
                 try
@@ -46,6 +56,14 @@ namespace Stocks_Client
                     MessageBox.Show("Invalid ip address." + Environment.NewLine +
                         "Please make sure it is in the correct format.");
                 }
+            }
+        }
+
+        private void Login_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                btnLogin.PerformClick();
             }
         }
     }

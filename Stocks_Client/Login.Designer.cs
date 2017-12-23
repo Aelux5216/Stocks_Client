@@ -51,6 +51,7 @@
             this.txtIpAddress.Name = "txtIpAddress";
             this.txtIpAddress.Size = new System.Drawing.Size(100, 20);
             this.txtIpAddress.TabIndex = 1;
+            this.txtIpAddress.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Login_KeyUp);
             // 
             // label1
             // 
