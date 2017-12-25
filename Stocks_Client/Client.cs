@@ -149,7 +149,7 @@ namespace Stocks_Client
 
             Read();
 
-            Thread t2 = new Thread(() => Thread.Sleep(2000));
+            Thread t2 = new Thread(() => Thread.Sleep(1400));
             t2.Start();
             t2.Join();
 
