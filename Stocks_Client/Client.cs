@@ -457,5 +457,14 @@ namespace Stocks_Client
         {
             reconnect();
         }
+		
+		private void btnSignOut_Click(object sender, EventArgs e)
+		{
+			    client.socket = null;
+				this.Hide();
+                var Login1 = new Login();
+                Login1.Closed += (f, args) => this.Close();
+                Login1.Show();
+		}
     }
 }

@@ -39,6 +39,7 @@
             this.btnRefresh = new System.Windows.Forms.Button();
             this.grpControlPanel = new System.Windows.Forms.GroupBox();
             this.btnReconnect = new System.Windows.Forms.Button();
+            this.btnSignOut = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgdDisplay)).BeginInit();
             this.grpAccount.SuspendLayout();
             this.grpControlPanel.SuspendLayout();
@@ -154,6 +155,7 @@
             // 
             // grpControlPanel
             // 
+            this.grpControlPanel.Controls.Add(this.btnSignOut);
             this.grpControlPanel.Controls.Add(this.btnReconnect);
             this.grpControlPanel.Controls.Add(this.btnRefresh);
             this.grpControlPanel.Controls.Add(this.btnBuy);
@@ -176,6 +178,17 @@
             this.btnReconnect.Text = "Connect/Reconnect \r\nto server";
             this.btnReconnect.UseVisualStyleBackColor = true;
             this.btnReconnect.Click += new System.EventHandler(this.btnReconnect_Click);
+            // 
+            // btnSignOut
+            // 
+            this.btnSignOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
+            this.btnSignOut.Location = new System.Drawing.Point(14, 295);
+            this.btnSignOut.Name = "btnSignOut";
+            this.btnSignOut.Size = new System.Drawing.Size(140, 38);
+            this.btnSignOut.TabIndex = 8;
+            this.btnSignOut.Text = "Sign Out";
+            this.btnSignOut.UseVisualStyleBackColor = true;
+            this.btnSignOut.Click += new System.EventHandler(this.btnSignOut_Click);
             // 
             // Client
             // 
@@ -212,6 +225,7 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.GroupBox grpControlPanel;
         private System.Windows.Forms.Button btnReconnect;
+        private System.Windows.Forms.Button btnSignOut;
     }
 }
 
