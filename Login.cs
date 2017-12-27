@@ -22,38 +22,38 @@ namespace Stocks_Client
         
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text;
+            string username = txtUsername.Text; //Get the inputted username. 
 
             if (username.Contains("$") || username.Contains(" "))
             {
-                MessageBox.Show("Username cannot contain spaces or the '$' symbol." + Environment.NewLine + "Please try again.");
+                MessageBox.Show("Username cannot contain spaces or the '$' symbol." + Environment.NewLine + "Please try again."); //If the username contains spaces or $(my delimiter).
             }
 
             else if (username == "" || username == " ")
             {
-                MessageBox.Show("Username cannot be blank.");
+                MessageBox.Show("Username cannot be blank."); //If username is blank show messagebox.
             }
 
             else if (txtIpAddress.Text == "" || txtIpAddress.Text == " ")
             {
-                MessageBox.Show("Ip address cannot be blank.");
+                MessageBox.Show("Ip address cannot be blank."); //If ip address is blank show messagebox.
             }
 
             else
             {
                 try
                 {
-                    IPAddress Ipaddress = IPAddress.Parse(txtIpAddress.Text);
-                    loginInfo = username + "$" + Ipaddress.ToString();
-                    this.Hide();
-                    var client1 = new Client();
-                    client1.Closed += (f, args) => this.Close();
-                    client1.Show();
+                    IPAddress Ipaddress = IPAddress.Parse(txtIpAddress.Text); //Check to see if the ip address entered is valid by trying to convert it.
+                    loginInfo = username + "$" + Ipaddress.ToString(); //Set Login info variable to username and ip address.
+                    this.Hide(); //Hide this form.
+                    var client1 = new Client(); //Create a new instance of client form.
+                    client1.Closed += (f, args) => this.Close(); //Assign the close method to the instance.
+                    client1.Show(); //Show the new form.
                 }
                 
                 catch (Exception)
                 {
-                    MessageBox.Show("Invalid ip address." + Environment.NewLine +
+                    MessageBox.Show("Invalid ip address." + Environment.NewLine + //If the ip address can't be converted show a messagebox.
                         "Please make sure it is in the correct format.");
                 }
             }
@@ -61,7 +61,7 @@ namespace Stocks_Client
 
         private void Login_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if(e.KeyCode == Keys.Enter) //If enter is pressed activate button.
             {
                 btnLogin.PerformClick();
             }
