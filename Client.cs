@@ -149,7 +149,7 @@ namespace Stocks_Client
 
             Read();
 
-            Thread t2 = new Thread(() => Thread.Sleep(1400));
+            Thread t2 = new Thread(() => Thread.Sleep(600));
             t2.Start();
             t2.Join();
 
@@ -170,7 +170,7 @@ namespace Stocks_Client
 
             Read();
 
-            Thread t3 = new Thread(() => Thread.Sleep(1400));
+            Thread t3 = new Thread(() => Thread.Sleep(500));
             t3.Start();
             t3.Join();
             
@@ -188,6 +188,8 @@ namespace Stocks_Client
 
             string splitBalanceString = splitBalance.ToString("#####.00"); 
             txtBalance.Text = "£" + splitBalanceString;
+
+            grpAccount.Text = string.Format("Account:{0}", userDetails[0]);
 
             //recieve clientinfo from server
             dgdDisplay.AutoResizeColumns();
@@ -373,7 +375,7 @@ namespace Stocks_Client
 
             Read();
             
-            Thread t = new Thread(() => Thread.Sleep(700));
+            Thread t = new Thread(() => Thread.Sleep(500));
             t.Start();
             t.Join();
             
@@ -415,7 +417,7 @@ namespace Stocks_Client
 
             Read();
             
-            Thread t = new Thread(() => Thread.Sleep(700));
+            Thread t = new Thread(() => Thread.Sleep(500));
             t.Start();
             t.Join();
 

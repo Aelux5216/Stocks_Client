@@ -41,8 +41,8 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(418, 40);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Your Puchase history is desplayed below.\r\nPlease press the back button to return " +
-    "to viewing page.";
+            this.label1.Text = "Your last 30 transations are displayed below.\r\nPlease press the back button to re" +
+    "turn to viewing page.";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnBack

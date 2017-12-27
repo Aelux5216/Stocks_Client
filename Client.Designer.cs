@@ -38,8 +38,8 @@
             this.lblBalance = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.grpControlPanel = new System.Windows.Forms.GroupBox();
-            this.btnReconnect = new System.Windows.Forms.Button();
             this.btnSignOut = new System.Windows.Forms.Button();
+            this.btnReconnect = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgdDisplay)).BeginInit();
             this.grpAccount.SuspendLayout();
             this.grpControlPanel.SuspendLayout();
@@ -168,17 +168,6 @@
             this.grpControlPanel.TabStop = false;
             this.grpControlPanel.Text = "Control Panel";
             // 
-            // btnReconnect
-            // 
-            this.btnReconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
-            this.btnReconnect.Location = new System.Drawing.Point(12, 234);
-            this.btnReconnect.Name = "btnReconnect";
-            this.btnReconnect.Size = new System.Drawing.Size(143, 55);
-            this.btnReconnect.TabIndex = 7;
-            this.btnReconnect.Text = "Connect/Reconnect \r\nto server";
-            this.btnReconnect.UseVisualStyleBackColor = true;
-            this.btnReconnect.Click += new System.EventHandler(this.btnReconnect_Click);
-            // 
             // btnSignOut
             // 
             this.btnSignOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
@@ -189,6 +178,17 @@
             this.btnSignOut.Text = "Sign Out";
             this.btnSignOut.UseVisualStyleBackColor = true;
             this.btnSignOut.Click += new System.EventHandler(this.btnSignOut_Click);
+            // 
+            // btnReconnect
+            // 
+            this.btnReconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
+            this.btnReconnect.Location = new System.Drawing.Point(12, 234);
+            this.btnReconnect.Name = "btnReconnect";
+            this.btnReconnect.Size = new System.Drawing.Size(143, 55);
+            this.btnReconnect.TabIndex = 7;
+            this.btnReconnect.Text = "Connect/Reconnect \r\nto server";
+            this.btnReconnect.UseVisualStyleBackColor = true;
+            this.btnReconnect.Click += new System.EventHandler(this.btnReconnect_Click);
             // 
             // Client
             // 
