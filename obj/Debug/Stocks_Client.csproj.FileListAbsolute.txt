@@ -21,3 +21,15 @@ C:\Users\Jason\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Cours
 C:\Users\Jason\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.csproj.CoreCompileInputs.cache
 C:\Users\Jason\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.exe
 C:\Users\Jason\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.pdb
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\bin\Debug\Stocks_Client.exe.config
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\bin\Debug\Stocks_Client.exe
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\bin\Debug\Stocks_Client.pdb
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.csprojResolveAssemblyReference.cache
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.Client.resources
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.Login.resources
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.Properties.Resources.resources
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.PurchaseHistory.resources
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.csproj.GenerateResource.Cache
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.csproj.CoreCompileInputs.cache
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.exe
+C:\Users\thedr\OneDrive - University of Plymouth\Uni work\2017-2018\NET205\Coursework part 2-Stocks\Stocks_Client\Stocks_Client\obj\Debug\Stocks_Client.pdb

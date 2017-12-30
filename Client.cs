@@ -149,7 +149,7 @@ namespace Stocks_Client
 
             Read(); //Recieve result of command.
 
-            Thread t2 = new Thread(() => Thread.Sleep(800)); //Sleep thread until SQL has been executed on the server side.
+            Thread t2 = new Thread(() => Thread.Sleep(1000)); //Sleep thread until SQL has been executed on the server side.
             t2.Start();
             t2.Join();
 
